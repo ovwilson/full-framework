@@ -12,7 +12,11 @@
     "scripts:install": "node scripts//install",
     "scripts:sync": "node scripts//sync",
     "scripts:create:seed": "node scripts//seed",
-    "scripts:package:json:install": "node scripts//package-json"
+    "scripts:package:json:install": "node scripts//package-json",
+    "scripts:seed": "node scripts//seed",
+    "scripts:package:json": "node scripts//package-json",
+    "scripts:local": "node scripts//local",
+    "scripts:global": "node scripts//global"
   },
   "private": true,
   "dependencies": {
