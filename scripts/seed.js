@@ -13,6 +13,10 @@ var store = {
 
 const seed = new Seed(store);
 
-const createSeed$ = Rx.Observable.of(seed.addSeed$.take(1), seed.userContent$.take(1), seed.writeFile$.take(1))
-    .concatAll().subscribe(data => console.log(data));
+const createSeed$ = Rx.Observable.of(
+    seed.addSeed$.take(1), 
+    seed.userContent$.take(1), 
+    seed.writeFile$.take(1))
+    .concatAll()
+    .subscribe(data => console.log(data));
 

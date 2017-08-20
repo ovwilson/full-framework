@@ -14,7 +14,9 @@ const store = {
         'scripts:seed': 'node scripts//seed',
         'scripts:package:json': 'node scripts//package-json',
         'scripts:local':'node scripts//local',
-        'scripts:global': 'node scripts//global'
+        'scripts:global': 'node scripts//global',
+        'scripts:angular':'node scripts//angular',
+        'start:json:server':'json-server --watch db.json'
     }
 };
 
