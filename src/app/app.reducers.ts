@@ -1,8 +1,12 @@
+
+import { StoreModule, ActionReducer, combineReducers } from '@ngrx/store';
+
+
 export interface State {
     loading: boolean;
 }
 
-export const reducers = () => {
+export function reducers() {
     return {
         loading: null
     };

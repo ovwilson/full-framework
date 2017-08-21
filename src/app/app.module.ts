@@ -15,7 +15,8 @@ import { reducers } from './app.reducers';
   ],
   imports: [
     BrowserModule,
-    StoreModule.provideStore(reducers())
+    StoreModule.forRoot(reducers()),
+    StoreDevtoolsModule.instrument({ maxAge: 50 })
   ],
   providers: [PreloadSelectedModules],
   bootstrap: [AppComponent]
