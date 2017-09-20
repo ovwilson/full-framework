@@ -48,30 +48,34 @@ class Seed extends Files {
 
     get addSeed$() {
         return Rx.Observable.create((observer) => {
-            for (let i = 0; i < Store.numberOfUsers; i++) { addUserReducer(); }
-            observer.next(`${Store.numberOfUsers} users ready to create.`);
-        });
-    }
-
-    get userContent$() {
-        return Rx.Observable.create((observer) => {
-            const users = Object.assign({}, { users: Store.users });
-            Store.contents = JSON.stringify(users, null, 2);
-            observer.next(`User contents string ready.`);
+            const tables = Object.keys(Store.schema);
+            let records = {};
+            tables.map(key => {
+                let keyRecords = [];
+                for (let i = 0; i < Store.schema[key].quantity; i++) {
+                    keyRecords.push(Store.schema[key].attributes());
+                }
+                records = Object.assign(records, { [key]: keyRecords });
+            });
+            setContentReducer(records);
+            observer.next(`${Store.quantity} records ready to create.`);
         });
     }
 
 }
+
+const setContentReducer = (records) => Store.contents = JSON.stringify(records, null, 2);
+
+const addReducer = () => {
+    const user = Object.assign({}, { name: faker.name.findName(), email: faker.internet.email() });
+    Store.users.push(user);
+};
 
 const contentReducer = (contents) => {
     const scripts = Object.assign(contents.scripts, Store.scripts);
     return Object.assign({}, contents, { scripts: scripts });
 }
 
-const addUserReducer = () => {
-    const user = Object.assign({}, { name: faker.name.findName(), email: faker.internet.email() });
-    Store.users.push(user);
-};
 
 module.exports = {
     PackageJSON: PackageJSON,
