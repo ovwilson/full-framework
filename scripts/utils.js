@@ -51,17 +51,28 @@ class Seed extends Files {
             const tables = Object.keys(Store.schema);
             let records = {};
             tables.map(key => {
+                const record = Store.schema[key];
                 let keyRecords = [];
-                for (let i = 0; i < Store.schema[key].quantity; i++) {
-                    keyRecords.push(Store.schema[key].attributes());
+                const seqId = new NumberGenerator();
+                for (let i = 0; i < record.quantity; i++) {
+                    let entry = Object.create({});
+                    if (record.incrementId) { entry = Object.assign({}, { id: seqId.nextNumber }); } // Check for sequential numbering 
+                    entry = Object.assign(entry, record.attributes());
+                    keyRecords.push(entry);
                 }
                 records = Object.assign(records, { [key]: keyRecords });
             });
             setContentReducer(records);
-            observer.next(`${Store.quantity} records ready to create.`);
+            observer.next(`Records ready to create.`);
         });
     }
 
+}
+
+class NumberGenerator {
+    constructor() { this.initialNumber = 0; }
+    increment() { this.initialNumber++; }
+    get nextNumber() { this.increment(); return this.initialNumber; }
 }
 
 const setContentReducer = (records) => Store.contents = JSON.stringify(records, null, 2);

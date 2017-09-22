@@ -9,12 +9,19 @@ var store = {
     fileFormat: 'utf8',
     schema: {
         users: {
+            incrementId: true,
             quantity: 10,
             attributes: () => Object.assign({}, { name: faker.name.findName(), email: faker.internet.email() })
         },
         settings: {
+            incrementId: true,
             quantity: 5,
             attributes: () => Object.assign({}, { title: faker.company.companyName(), description: faker.lorem.paragraph() })
+        },
+        rules: {
+            incrementId: false,
+            quantity:10,
+            attributes: () => Object.assign({},{id: faker.random.number(), value: faker.company.catchPhraseAdjective()})
         }
     },
     contents: ''

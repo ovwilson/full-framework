@@ -1,13 +1,15 @@
 
 import { StoreModule, ActionReducer, combineReducers } from '@ngrx/store';
-
+import { Setting } from './models/setting';
+import * as fromSettings from './settings/settings.reducer';
 
 export interface State {
-    loading: boolean;
+    settings: Setting[];
 }
 
 export function reducers() {
     return {
-        loading: null
+        settings: fromSettings.settings
     };
-};
+}
+
