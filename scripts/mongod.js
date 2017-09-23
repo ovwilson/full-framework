@@ -1,6 +1,9 @@
+var dotenv = require('dotenv');
+dotenv.config();
+
 var shell = require('shelljs');
 
-shell.echo('Starting Mongo Daemon ...');
-shell.exec('"mongod" --dbpath "/~/documents/mongodb/data/db" --smallfiles');
+const DB_PATH = process.env.DB_PATH;
 
-//mongodb://localhost:27017
+shell.echo('Starting Mongo Daemon ...');
+shell.exec(`mongod --dbpath "${DB_PATH}" --smallfiles`);
