@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   title = 'app';
   constructor(private store: Store<fromRoot.State>) { }
   ngOnInit() {
-   //this.store.dispatch(new fromSettingsActions.SettingsCreate());
+   // this.store.dispatch(new fromSettingsActions.SettingsCreate());
    // this.store.dispatch(new fromSettingsActions.SettingsUpdate());
   }
 }

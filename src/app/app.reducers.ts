@@ -4,7 +4,7 @@ import { Setting } from './models/setting';
 import * as fromSettings from './settings/settings.reducer';
 
 export interface State {
-    settings: Setting[];
+    settings: fromSettings.State;
 }
 
 export function reducers() {
