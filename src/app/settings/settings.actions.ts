@@ -1,41 +1,44 @@
 import { Action } from '@ngrx/store';
 import { Setting } from './../models/setting';
+import { type } from './../utils/type';
 
-export const SETTINGS_GET = '[Settings] Get';
-export const SETTINGS_RECEIVE = '[Settings] Receive';
+export const actionTypes = {
+    'SETTINGS_GET': type('[Settings] Get'),
+    'SETTINGS_RECEIVE': type('[Settings] Receive'),
+    'SETTING_GET': type('[Setting] Get'),
+    'SETTING_CREATE': type('[Setting] Create'),
+    'SETTING_UPDATE': type('[Setting] Update'),
+    'SETTING_DELETE': type('[Setting] Delete'),
+    'SETTING_RECEIVE': type('[Setting] Receive')
+};
 
-export const SETTING_GET = '[Setting] Get';
-export const SETTING_CREATE = '[Setting] Create';
-export const SETTING_UPDATE = '[Setting] Update';
-export const SETTING_DELETE = '[Setting] Delete';
-export const SETTING_RECEIVE = '[Setting] Receive';
 
 export class SettingsGet implements Action {
-    readonly type = SETTINGS_GET;
+    readonly type = actionTypes.SETTINGS_GET;
 }
 
 export class SettingsReceive implements Action {
-    readonly type = SETTINGS_RECEIVE;
+    readonly type = actionTypes.SETTINGS_RECEIVE;
     constructor(public payload: Setting[]) { }
 }
 
 export class SettingCreate implements Action {
-    readonly type = SETTING_CREATE;
+    readonly type = actionTypes.SETTING_CREATE;
     constructor(public payload: Setting) { }
 }
 
 export class SettingUpdate implements Action {
-    readonly type = SETTING_UPDATE;
-    constructor(public payload: { id: number, body: Setting}) { }
+    readonly type = actionTypes.SETTING_UPDATE;
+    constructor(public payload: { id: number, body: Setting }) { }
 }
 
 export class SettingDelete implements Action {
-    readonly type = SETTING_DELETE;
+    readonly type = actionTypes.SETTING_DELETE;
     constructor(public payload: { id: number }) { }
 }
 
 export class SettingReceive implements Action {
-    readonly type = SETTING_RECEIVE;
+    readonly type = actionTypes.SETTING_RECEIVE;
     constructor(public payload: Setting) { }
 }
 
