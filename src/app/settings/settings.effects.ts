@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
@@ -12,6 +12,7 @@ import { of } from 'rxjs/observable/of';
 
 import * as fromSettingsActions from './settings.actions';
 import { Setting } from './../models/setting';
+import { MongoService } from './../services/mongo';
 
 const url = '/settings';
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -20,41 +21,32 @@ const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
 export class SettingsEffects {
 
-    @Effect() getSettings$: Observable<Action> = this.actions$.ofType(fromSettingsActions.SETTINGS_GET)
-        .mergeMap(action =>
-            this.http.get(url, { headers: headers })
-                .map((data: Setting[]) => (new fromSettingsActions.SettingsReceive(data)))
-                .catch(() => of({ type: 'GET_FAILED' }))
+    @Effect() getSettings$: Observable<Action> = this.actions$.ofType(fromSettingsActions.actionTypes.SETTINGS_GET)
+        .mergeMap(action => this.service.get(url, headers)
+            .map((data: Setting[]) => (new fromSettingsActions.SettingsReceive(data)))
+            .catch(() => of({ type: 'GET_SETTINGS_FAILED' }))
         );
 
     @Effect() createSetting$: Observable<Action> =
-    this.actions$.ofType<fromSettingsActions.SettingCreate>(fromSettingsActions.SETTING_CREATE)
-        .mergeMap(action =>
-            this.http.post(url, action.payload, { headers: headers })
-                .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
-                .catch(() => of({ type: 'CREATE_FAILED' }))
+    this.actions$.ofType<fromSettingsActions.SettingCreate>(fromSettingsActions.actionTypes.SETTING_CREATE)
+        .mergeMap(action => this.service.create(url, action.payload, headers)
+            .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
+            .catch(() => of({ type: 'CREATE_SETTINGS_FAILED' }))
         );
 
     @Effect() updateSetting$: Observable<Action> =
-    this.actions$.ofType<fromSettingsActions.SettingUpdate>(fromSettingsActions.SETTING_UPDATE)
-        .map(action => {
-            const payload = action.payload;
-            if (payload.body.id) { delete payload.body['id']; }
-            return Object.assign(action, { payload: payload });
-        })
-        .mergeMap(action =>
-            this.http.patch(`${url}/${action.payload.id}`, action.payload.body, { headers: headers })
-                .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
-                .catch(() => of({ type: 'UPDATE_FAILED' }))
+    this.actions$.ofType<fromSettingsActions.SettingUpdate>(fromSettingsActions.actionTypes.SETTING_UPDATE)
+        .mergeMap(action => this.service.update(url, action.payload.id, action.payload.body, headers)
+            .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
+            .catch(() => of({ type: 'UPDATE_SETTINGS_FAILED' }))
         );
 
     @Effect() deleteSetting$: Observable<Action> =
-    this.actions$.ofType<fromSettingsActions.SettingDelete>(fromSettingsActions.SETTING_DELETE)
-        .mergeMap(action =>
-            this.http.delete(`${url}/${action.payload.id}`, { headers: headers })
-                .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
-                .catch(() => of({ type: 'DELETE_FAILED' }))
+    this.actions$.ofType<fromSettingsActions.SettingDelete>(fromSettingsActions.actionTypes.SETTING_DELETE)
+        .mergeMap(action => this.service.delete(url, action.payload.id, headers)
+            .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
+            .catch(() => of({ type: 'DELETE_SETTINGS_FAILED' }))
         );
 
-    constructor(private http: HttpClient, private actions$: Actions) { }
+    constructor(private service: MongoService, private actions$: Actions) { }
 }

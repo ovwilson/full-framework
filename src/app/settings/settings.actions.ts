@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Setting } from './../models/setting';
-import { type } from './../utils/type';
+import { type } from './../services/type';
 
 export const actionTypes = {
     'SETTINGS_GET': type('[Settings] Get'),
