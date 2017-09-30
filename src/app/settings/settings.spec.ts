@@ -12,9 +12,10 @@ import 'rxjs/add/observable/concat';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/of';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { Setting } from './../models/setting';
 import * as fromActions from './settings.actions';
+import { MongoService } from './../services/mongo';
 
 describe('Settings Effects', () => {
     let effects: SettingsEffects;
@@ -24,15 +25,16 @@ describe('Settings Effects', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientModule],
+            declarations: [],
             providers: [
                 SettingsEffects,
+                MongoService,
                 provideMockActions(() => actions)
             ]
         });
         expectedKeys = ['__v', 'id', '_id', 'title',
             'description', 'createdAt', 'updatedAt'].sort();
         effects = TestBed.get(SettingsEffects);
-
     });
     /*
         it('should work', () => {
@@ -42,7 +44,7 @@ describe('Settings Effects', () => {
     
             expect(effects.someSource$).toBeObservable(expected);
         });
-        */
+        
 
     it('should CREATE Setting', async(() => {
         const mockSetting: Setting = {
@@ -115,5 +117,5 @@ describe('Settings Effects', () => {
         const concat$ = Observable.concat(get$.take(1), delete$.take(1)).subscribe();
     }));
 
-
+*/
 });
