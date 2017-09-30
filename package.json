@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"npm run start:express:typescript\" \"node ng serve\"",
     "build": "ng build",
-    "test": "ng test",
+    "test": "concurrently \"npm run start:express:typescript\" \"ng test\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "scripts:install": "node scripts//install",
@@ -17,8 +17,9 @@
     "scripts:local": "node scripts//local",
     "scripts:global": "node scripts//global",
     "scripts:angular": "node scripts//angular",
-    "scripts:mongod": "node scripts/mongod",
-    "start:json:server": "json-server --watch db.json"
+    "scripts:mongod": "node scripts//mongod",
+    "start:json:server": "json-server --watch db.json",
+    "start:express:typescript":"node node_modules//express-typescript//index"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +41,7 @@
     "@ngrx/store-devtools": "^4.0.0",
     "core-js": "^2.4.1",
     "dotenv": "^4.0.0",
+    "express-typescript": "git+http://github.com/ovwilson/express-typescript.git",
     "faker": "^4.1.0",
     "jasmine-marbles": "^0.1.0",
     "json-server": "^0.12.0",
