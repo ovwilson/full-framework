@@ -7,7 +7,7 @@ import { Setting } from './../models/setting';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/concat';
 
-describe('Mongo Effects', () => {
+describe('Mongo Service', () => {
 
     let service: MongoService;
     let id: number;
@@ -28,7 +28,7 @@ describe('Mongo Effects', () => {
     it('should CREATE record', async(() => {
         service.create(url, mockData, headers)
             .do((response: any) => id = response.id)
-            .do(response => console.log('Mongo Effects: should CREATE Record', response))
+            .do(response => console.log('Mongo Service: should CREATE Record', response))
             .subscribe((response: Setting) => {
                 expect(response.title).toEqual(mockData.title);
                 expect(response.description).toEqual(mockData.description);
@@ -37,7 +37,7 @@ describe('Mongo Effects', () => {
 
     it('should GET records', async(() => {
         service.get(url, headers)
-            .do(response => console.log('Mongo Effects: should GET Records', response))
+            .do(response => console.log('Mongo Service: should GET Records', response))
             .subscribe((response: Setting[]) => {
                 const keys = Object.keys(response[0]).sort();
                 expect(response.length).toBeGreaterThan(0);
@@ -49,10 +49,10 @@ describe('Mongo Effects', () => {
 
     it('should UPDATE record', async(() => {
         const update$ = service.update(url, id, mockUpdate, headers)
-            .do(response => console.log('Mongo Effects: should UPDATE Record', response));
+            .do(response => console.log('Mongo Service: should UPDATE Record', response));
 
         const getById$ = service.getById(url, id, headers)
-            .do(response => console.log('Mongo Effects: should UPDATE Record - GETBYID', response))
+            .do(response => console.log('Mongo Service: should UPDATE Record - GETBYID', response))
             .do((response: Setting[]) => {
                 const setting: Setting = response[0];
                 const keys = Object.keys(setting).sort();
@@ -68,7 +68,7 @@ describe('Mongo Effects', () => {
 
     it('should DELETE record', async(() => {
         const delete$ = service.deleteById(url, id, headers)
-            .do(response => console.log('Mongo Effects: should DELETE Record', response))
+            .do(response => console.log('Mongo Service: should DELETE Record', response))
             .do((response: Setting) => {
                 const keys = Object.keys(response).sort();
                 expect(keys.length).toBeGreaterThan(0);
@@ -78,10 +78,8 @@ describe('Mongo Effects', () => {
             });
 
         const getById$ = service.getById(url, id, headers)
-            .do(response => console.log('Mongo Effects: should DELETE Record - GETBYID', response))
-            .do((response: Setting[]) => {
-                expect(response.length).toEqual(0);
-            });
+            .do(response => console.log('Mongo Service: should DELETE Record - GETBYID', response))
+            .do((response: Setting[]) =>  expect(response.length).toEqual(0));
 
         const concat$ = Observable.concat(delete$.take(1), getById$.take(1)).subscribe();
 

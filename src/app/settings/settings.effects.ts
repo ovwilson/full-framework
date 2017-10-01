@@ -21,10 +21,18 @@ const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
 export class SettingsEffects {
 
-    @Effect() getSettings$: Observable<Action> = this.actions$.ofType(fromSettingsActions.actionTypes.SETTINGS_GET)
+    @Effect() getSettings$: Observable<Action> =
+    this.actions$.ofType<fromSettingsActions.SettingsGet>(fromSettingsActions.actionTypes.SETTINGS_GET)
         .mergeMap(action => this.service.get(url, headers)
             .map((data: Setting[]) => (new fromSettingsActions.SettingsReceive(data)))
             .catch(() => of({ type: 'GET_SETTINGS_FAILED' }))
+        );
+
+    @Effect() getSettingById$: Observable<Action> =
+    this.actions$.ofType<fromSettingsActions.SettingGet>(fromSettingsActions.actionTypes.SETTING_GET)
+        .mergeMap(action => this.service.getById(url, action.payload.id, headers)
+            .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
+            .catch(() => of({ type: 'GET_SETTING_FAILED' }))
         );
 
     @Effect() createSetting$: Observable<Action> =
@@ -43,7 +51,7 @@ export class SettingsEffects {
 
     @Effect() deleteSetting$: Observable<Action> =
     this.actions$.ofType<fromSettingsActions.SettingDelete>(fromSettingsActions.actionTypes.SETTING_DELETE)
-        .mergeMap(action => this.service.delete(url, action.payload.id, headers)
+        .mergeMap(action => this.service.deleteById(url, action.payload.id, headers)
             .map((data: Setting) => (new fromSettingsActions.SettingReceive(data)))
             .catch(() => of({ type: 'DELETE_SETTINGS_FAILED' }))
         );

@@ -22,6 +22,11 @@ export class SettingsReceive implements Action {
     constructor(public payload: Setting[]) { }
 }
 
+export class SettingGet implements Action {
+    readonly type = actionTypes.SETTING_GET;
+    constructor(public payload: { id: number }) { }
+}
+
 export class SettingCreate implements Action {
     readonly type = actionTypes.SETTING_CREATE;
     constructor(public payload: Setting) { }
