@@ -11,6 +11,10 @@ export class MongoService {
         return this.http.get(url, { headers: headers });
     }
 
+    getById(url: string, id: number, headers: HttpHeaders) {
+        return this.http.get(`${url}/${id}`, { headers: headers });
+    }
+
     create(url: string, params: any, headers: HttpHeaders) {
         return this.http.post(url, params, { headers: headers });
     }
@@ -20,7 +24,11 @@ export class MongoService {
         return this.http.patch(`${url}/${id}`, params, { headers: headers });
     }
 
-    delete(url: string, id: number, headers: HttpHeaders) {
+    delete(url: string, headers: HttpHeaders) {
+        return this.http.delete(url, { headers: headers });
+    }
+
+    deleteById(url: string, id: number, headers: HttpHeaders) {
         return this.http.delete(`${url}/${id}`, { headers: headers });
     }
 

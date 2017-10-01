@@ -88,9 +88,9 @@ describe('Settings Effects', () => {
         const update$ = effects.updateSetting$
             .do(action => console.log('should UPDATE Setting', action))
             .do((action: fromActions.SettingReceive) => {
-                const data = Object.keys(action.payload).sort();
+                const dataKeys = Object.keys(action.payload).sort();
                 expect(action.type).toEqual('[Setting] Receive');
-                expect(data).toEqual(expectedKeys);
+                expect(dataKeys).toEqual(expectedKeys);
                 expect(action.payload.title).toEqual(mockSetting.title);
             });
 
@@ -116,6 +116,6 @@ describe('Settings Effects', () => {
 
         const concat$ = Observable.concat(get$.take(1), delete$.take(1)).subscribe();
     }));
-
 */
+
 });
