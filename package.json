@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"npm run start:express:typescript\" \"node ng serve\"",
+    "start": "concurrently \"npm run start:express:typescript\" \"ng serve\"",
     "build": "ng build",
     "test": "concurrently \"npm run start:express:typescript\" \"ng test\"",
     "lint": "ng lint",
@@ -19,7 +19,7 @@
     "scripts:angular": "node scripts//angular",
     "scripts:mongod": "node scripts//mongod",
     "start:json:server": "json-server --watch db.json",
-    "start:express:typescript":"node node_modules//express-typescript//index"
+    "start:express:typescript": "node node_modules//express-typescript//index"
   },
   "private": true,
   "dependencies": {
@@ -39,6 +39,7 @@
     "@ngrx/effects": "^4.0.5",
     "@ngrx/store": "^4.0.3",
     "@ngrx/store-devtools": "^4.0.0",
+    "bootstrap": "next",
     "core-js": "^2.4.1",
     "dotenv": "^4.0.0",
     "express-typescript": "git+http://github.com/ovwilson/express-typescript.git",

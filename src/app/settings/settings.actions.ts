@@ -15,6 +15,7 @@ export const actionTypes = {
 
 export class SettingsGet implements Action {
     readonly type = actionTypes.SETTINGS_GET;
+    constructor(public payload: any) { }
 }
 
 export class SettingsReceive implements Action {
@@ -49,6 +50,7 @@ export class SettingReceive implements Action {
 
 export type All = SettingsGet
     | SettingsReceive
+    | SettingGet
     | SettingCreate
     | SettingUpdate
     | SettingDelete

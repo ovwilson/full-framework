@@ -11,6 +11,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './app.reducers';
 import { Effects } from './app.effects';
 
+// Services
+import { MongoService } from './services/mongo';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -22,7 +25,7 @@ import { Effects } from './app.effects';
     StoreDevtoolsModule.instrument({ maxAge: 50 }),
     EffectsModule.forRoot([Effects.settingsEffects()])
   ],
-  providers: [PreloadSelectedModules],
+  providers: [PreloadSelectedModules, MongoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

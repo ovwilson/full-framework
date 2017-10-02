@@ -15,12 +15,12 @@ const initialState: State = {
 
 export function settings(state = initialState, action: fromActions.All): State {
     switch (action.type) {
-        case fromActions.SETTINGS_RECEIVE:
+        case fromActions.actionTypes.SETTINGS_RECEIVE:
             return {
                 model: state.model,
                 models: action.payload
             };
-            case fromActions.SETTING_RECEIVE:
+            case fromActions.actionTypes.SETTING_RECEIVE:
             return {
                 model: action.payload,
                 models: state.models
